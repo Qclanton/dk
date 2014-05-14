@@ -2,7 +2,7 @@
 namespace Components;
 
 class Components extends \System {
-	public $content = [];
+	public $content = ['head'=>''];
 	public $user_level;
 	protected $rules = [];
 	protected $necessary_vars;

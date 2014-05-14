@@ -46,6 +46,12 @@ class System {
 		return $converted_string;
 	}
 	
+	public function convertToCamelCase($string) {
+		$converted_string = str_replace(' ', '', ucwords(str_replace('_', ' ', $string)));
+		
+		return $converted_string;
+	}
+	
 	public function redirect($url) {
 		header("Location: " . $url, true, 302);
 	}

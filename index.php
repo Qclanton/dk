@@ -39,7 +39,7 @@ $component_name = (isset($vars['get']->component) ? $vars['get']->component : "m
 $component_file = "components/" . $component_name . "/" . $component_name . ".php";
 if (file_exists($component_file)) {
 	require_once "components/" . $component_name . "/" . $component_name . ".php";
-	$component_class_name = "Components\\" . ucfirst($component_name);
+	$component_class_name = "Components\\" . str_replace(' ', '', ucwords(str_replace('_', ' ', $component_name)));
 	$component = new $component_class_name;
 	$component->setVars($vars);
 	$component->prepare();

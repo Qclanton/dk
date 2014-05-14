@@ -16,7 +16,8 @@
 			</div>
 			<div id="menu">
 				<ul>
-						<li><a href="<?= $this->site_url; ?>">Main</a></li>
+						<li><a href="<?= $this->site_url; ?>">Главная</a></li>
+						<? if ($logged_fl == "yes") { ?><li><a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=create">Создать объявление</a></li><? } ?>
 			<!--			<li><a href="<?= $this->site_url; ?>index.php/?component=projects&action=list">Project List</a></li>
 					<? if ($logged_fl == "yes") { ?>
 						<li><a href="<?= $this->site_url; ?>index.php/?component=filters&action=mytasks">My Tasks</a></li>
