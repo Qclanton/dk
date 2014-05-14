@@ -24,6 +24,9 @@ class BulletinBoard extends Components {
 				$this->Bulletins->setBulletin($bulletin);
 				$this->redirect($this->post->return_url);
 				break;
+			case 'showmylist':
+				$this->showList($this->user_id);
+				break;
 		}
 	}
 	
@@ -42,6 +45,26 @@ class BulletinBoard extends Components {
 		$breadcrumbs = [
 			'Объявления' => '',
 			(($bulletin_id) ? 'Редактирование: ' . $bulletin['title'] : 'Создание') => ''
+		];
+		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
+	}
+	
+	public function showList($user_id=null) {
+		// Get Bulletins
+		$bulletins = $this->Bulletins->getBulletins($this->user_id);
+		$vars = ['bulletins' => $bulletins];
+		
+		// Set View
+		$this->setView('components/bulletin_board/views/mylist.php', $vars);
+		$this->renderViewContent();
+		$this->content['top'] = $this->View->content;
+		
+		
+		// Set Bradcrumbs
+		$this->loadHelpers(['Breadcrumbs']);
+		$breadcrumbs = [
+			'Объявления' => '',
+			'Мои' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}

@@ -6,7 +6,7 @@
 	<form action="<?= $this->site_url; ?>index.php?component=bulletin_board&action=set" method="post">
 		<input type="hidden" name="id" value="<?= $bulletin->id; ?>"></input>
 		<input type="hidden" name="creation_date" value="<?= $bulletin->creation_date; ?>"></input>
-		<input type="hidden" name="return_url" value="<?= $this->site_url; ?>"></input>
+		<input type="hidden" name="return_url" value="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=showmylist"></input>
 		
 		<? if ($bulletin->id) { ?>
 			Дата создания: <?= $bulletin->creation_date; ?>

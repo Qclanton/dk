@@ -29,7 +29,7 @@ class Bulletins extends Models {
 	
 	public function getBulletins($user_id) {
 		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE b.`user_id`=?";
-		$bulletins = $this->Database->getObject($query, [$id]);
+		$bulletins = $this->Database->getObject($query, [$user_id]);
 		
 		return $bulletins;	
 	}

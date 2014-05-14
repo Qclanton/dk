@@ -1,6 +1,4 @@
 <?php
-$time_start = microtime(true);
-
 require_once "config.php";
 require_once "system.php";
 
@@ -76,9 +74,4 @@ if ($load_template_fl == "yes") {
 	
 	echo $content;
 }
-
-
-/* $time_end = microtime(true); 
-$time = $time_end - $time_start;
-echo "Time: $time";*/
 ?>
