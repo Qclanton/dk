@@ -53,9 +53,9 @@ class System {
 	}
 	
 	public function redirect($url) {
-		header("Location: " . $url, true, 302);
+		header('Location: ' . $url, true, 302);
 	}
-	
+
 	
 	// Functions with View
 	protected function setView($path, $vars=[]) {

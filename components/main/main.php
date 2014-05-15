@@ -1,15 +1,12 @@
 <?php
 namespace Components;
 
-class Main extends Components {
-	public $content = [
-		'top' => "Toop",
-		'bottom' => "Boooottttoooom"
-	];
-	
+class Main extends Components {	
 	public function load() {
-
-		// $this->content['top'] =  
+		// Set View
+		$this->setView('components/main/views/content.php');
+		$this->renderViewContent();
+		$this->content['top'] = $this->View->content;
 	}
 }
 ?>

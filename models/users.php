@@ -54,4 +54,36 @@ class Users extends Models {
 		
 		return $settings;
 	}
+	
+	public function saveUnattachedImages($user_id, $files) {
+		if (!$files) { return false; }
+		
+		$query = "INSERT INTO `users_unattached_images` VALUES ";
+		$vars = [];
+		$i=0;
+		foreach ($files as $file) {
+			$query .= "(?,?)";
+			$vars[] = $user_id;
+			$vars[] = $file;
+			
+			$i++; 
+			if ($i < count($files)) { $query .= ","; }			
+		}
+		
+		$result = $this->Database->executeQuery($query, $vars);
+		
+		return $result;		
+	}
+	
+	public function getUnattachedImages($user_id) {
+		$query = "SELECT `link` FROM `users_unattached_images` WHERE `user_id`=?";
+		$images = $this->Database->getObject($query, [$user_id]);
+		
+		return $images;
+	}
+	
+	public function removeUnattachedImages($user_id) {
+		$query = "DELETE FROM `users_unattached_images` WHERE `user_id`=?";
+		$result = $this->Database->executeQuery($query, [$user_id]);
+	}
 }

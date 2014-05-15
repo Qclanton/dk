@@ -16,7 +16,8 @@ class Bulletins extends Models {
 		'creation_date' => 'future',
 		'title' => '',
 		'description' => '',
-		'cost' => 0		
+		'cost' => 0,
+		'size'=>''		
 	];
 	public function getBulletin($id=null) {
 		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE b.`id`=?";
@@ -38,7 +39,7 @@ class Bulletins extends Models {
 		$bulletin = $this->nullValues($bulletin, ["id"]);
 		if (!$bulletin->id) { $bulletin->creation_date = date('Y-m-d H:i:s'); }
 		
-		$query = "INSERT INTO `bulletins` VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title`=?, `description`=?, `cost`=?";
+		$query = "INSERT INTO `bulletins` VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `title`=?, `description`=?, `cost`=?, `size`=?";
 		$vars = [
 			$bulletin->id,
 			$bulletin->user_id,
@@ -46,11 +47,44 @@ class Bulletins extends Models {
 			$bulletin->title,
 			$bulletin->description,
 			$bulletin->cost,
+			$bulletin->size,
 			$bulletin->title,
 			$bulletin->description,
-			$bulletin->cost
+			$bulletin->cost,
+			$bulletin->size
 		];
 		
-		$this->Database->executeQuery($query, $vars);
+		$result = $this->Database->executeQuery($query, $vars);
+		if (!$result) { return false; }
+		
+		if (!$bulletin->id) {
+			$query = "SELECT LAST_INSERT_ID() AS 'last_id'";
+			$bulletin->id = $this->Database->getValue($query);
+		}
+		
+		return $bulletin->id;
 	}
-}
+	
+	public function attachImages($bulletin_id, $images) {
+		$query = "INSERT INTO `bulletins_images` VALUES ";
+		$vars = [];
+		$i=0;
+		foreach ($images as $image) {
+			$query .= "(?,?)";
+			$vars[] = $bulletin_id;
+			$vars[] = $image;
+			
+			$i++; 
+			if ($i < count($images)) { $query .= ","; }			
+		}
+		
+		$result = $this->Database->executeQuery($query, $vars);
+	}
+	
+	public function getImages($bulletin_id) {
+		$query = "SELECT * FROM `bulletins_images` WHERE `bulletin_id`=?";
+		$images = $this->Database->getObject($query, [$bulletin_id]);
+		
+		return $images;			
+	}
+}	
