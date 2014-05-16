@@ -118,4 +118,18 @@ class BulletinBoard extends Components {
 			$this->Users->removeUnattachedImages($this->user_id);
 		}
 	}
+	
+	public function renderLastBulletins($quantity) {
+		$confines = [
+			'order'=>[
+				['column'=>"creation_date", 'side'=>"DESC"]
+			],
+			'limit_qty' => $quantity
+		];
+		$bulletins = $this->Database->getBulletins(null, $confines);
+		
+		// Set View
+		$this->setView('components/bulletin_board/views/last_bulletins.php', ['bulletins'=>$bulletins]);
+		$this->renderViewContent();		
+	}
 }

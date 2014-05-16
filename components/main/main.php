@@ -6,7 +6,7 @@ class Main extends Components {
 		// Set View
 		$this->setView('components/main/views/content.php');
 		$this->renderViewContent();
-		$this->content['top'] = $this->View->content;
+		$this->content['main'] = $this->View->content;
 	}
 }
 ?>

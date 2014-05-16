@@ -10,7 +10,7 @@ class System {
 	public $View;
 	
 	public function __construct() {
-		$this->setSeiteUrl();
+		$this->setSiteUrl();
 		$this->setCurrentUrl();
 	}
 	
@@ -21,7 +21,7 @@ class System {
 		}
 	}
 
-	private function setSeiteUrl() {
+	private function setSiteUrl() {
 		$protocol = ($_SERVER['HTTPS'] === "off" || empty($_SERVER['HTTPS']) ? "http://" : "https://");
 		$name = $_SERVER['SERVER_NAME'];
 		$path = strstr($_SERVER['PHP_SELF'], "index.php", true);		

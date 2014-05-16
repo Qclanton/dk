@@ -28,8 +28,19 @@ class Bulletins extends Models {
 		return $bulletin;
 	}
 	
-	public function getBulletins($user_id) {
-		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE b.`user_id`=?";
+	public function getBulletins($user_id=null, $params=null) {
+		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . "WHERE ?";
+		$vars = ['1'];
+		
+		if ($user_id) {
+			$query .= " AND b.`user_id`=?";
+			$vars[] = $user_id;
+		}
+		if ($params) {
+			$confines = $this->getConfines($params);
+			$query .= $confines['query'];
+			$vars = array_merge($vars, $confines['vars']);
+		}
 		$bulletins = $this->Database->getObject($query, [$user_id]);
 		
 		return $bulletins;	
