@@ -4,6 +4,6 @@
 		<input type="hidden" name="return_url" value="<?= $this->current_url; ?>"></input>
 		
 		<textarea cols="30" rows="5" name="text"></textarea>
-		<button>Отправить</button>
+		<button class="message-send">Отправить</button>
 	</form>
 </div>
