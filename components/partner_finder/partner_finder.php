@@ -41,9 +41,11 @@ class PartnerFinder extends Components {
 			$profile = $this->Profiles->getProfile($this->user_id);
 		}
 		
+		// Attach image
 		$this->loadModels(['Users']);
-		$this->Users->removeUnattachedImages($this->user_id);		
+		$this->Users->removeExpiredUnattachedImages($this->user_id);		
 		$unattached_images = $this->Users->getUnattachedImages($this->user_id);
+
 		
 		$vars = [
 			'dance_types' => $this->Profiles->getDanceTypes(),
@@ -76,21 +78,5 @@ class PartnerFinder extends Components {
 		$html .= '</select>';
 		
 		return $html;	
-	}
-	
-	public function uploadImage() {
-		$this->loadHelpers(['Uploader']);
-		$this->Uploader->allowed_extensions = ['png', 'jpg', 'gif'];		
-		if(!file_exists('uploads/user_' . $this->user_id)) { mkdir('uploads/user_' . $this->user_id); }
-		$this->Uploader->path = 'uploads/user_' . $this->user_id;
-		
-		$result = $this->Uploader->upload();
-		
-		if ($result) {
-			$this->loadModels(['Users']);
-			$this->Users->saveUnattachedImages($this->user_id, $this->Uploader->uploaded_files);
-		}
-		
-		return $result;  
 	}
 }

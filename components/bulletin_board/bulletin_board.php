@@ -92,24 +92,8 @@ class BulletinBoard extends Components {
 			'Мои' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
-	}
-	
-	public function uploadImage() {
-		$this->loadHelpers(['Uploader']);
-		$this->Uploader->allowed_extensions = ['png', 'jpg', 'gif'];		
-		if(!file_exists('uploads/user_' . $this->user_id)) { mkdir('uploads/user_' . $this->user_id); }
-		$this->Uploader->path = 'uploads/user_' . $this->user_id;
-		
-		$result = $this->Uploader->upload();
-		
-		if ($result) {
-			$this->loadModels(['Users']);
-			$this->Users->saveUnattachedImages($this->user_id, $this->Uploader->uploaded_files);
-		}
-		
-		return $result;  
-	}
-	
+	}	
+
 	public function setBulletin($bulletin) {
 		$bulletin->user_id = $this->user_id; 
 		$bulletin_id = $this->Bulletins->setBulletin($bulletin);

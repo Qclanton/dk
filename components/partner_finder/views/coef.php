@@ -94,7 +94,7 @@
 		</table>
 		
 		<? if ($unattached_image) { ?>
-			Фотография:
+			Фотография (свежезагруженная):
 			<input type="hidden" name="image" value="<?= $unattached_image->link; ?>"></input>
 			<img src="<?= $unattached_image->link; ?>"></img>
 		<? } elseif ($profile->image) { ?>
@@ -128,10 +128,7 @@
 		// Set dancers classes depends of dance type
 		$('select[name=dancer_class_id]').chained('select[name=dance_type_id]');
 		
-		// Set default city
-		$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=<?= $profile->region_id; ?>', function() {
-			$('#city_id-wrapper select[name=city_id] [value=<?= $profile->city_id; ?>]').attr('selected', 'selected');
-		});
+
 		
 	
 		// Upload images
@@ -146,6 +143,14 @@
 		
 		$('#profile-coef-submit-button').on('click', function() {
 			$('#profile-coef').submit();
-		});	
+		});
+		
+		
+		
+		
+		// Set default city
+		$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=<?= $profile->region_id; ?>', function() {
+			$('#city_id-wrapper select[name=city_id] [value=<?= $profile->city_id; ?>]').attr('selected', 'selected');
+		});
 	});
 </script>
