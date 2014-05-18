@@ -1,9 +1,19 @@
 <head>
 	<meta charset="utf-8"> 
-	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/style.css" />
+	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/css/style.css" />
 	<!-- <link href="<?= $this->site_url; ?>templates/basic/views/images/favicon.png" rel="shortcut icon" type="image/x-icon" /> -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	%head%
+	<script src="templates/dk/views/js/jquery.arcticmodal-0.3.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/css/jquery.arcticmodal-0.3.css" />
+	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/css/simple.css" />
+	<script>
+		$(function(){ 
+			$('#show-login-form-button').on('click', function() {
+				$('#exampleModal').arcticmodal();
+			});
+		});
+	</script>
 </head>
 <body>
 
@@ -50,16 +60,30 @@
 			</div>
 			<div id="login-form--wrapper">
 				<? if ($logged_fl == "no") { ?>
-				<form action="<?= $this->site_url; ?>index.php?component=authorization" method="post" id="login-form">
-					<input type="text" name="login"></input>
-					<input type="password" name="password"></input>
-					<input type="hidden" name="successfull_url" value=<?= $this->current_url; ?>></input>
-					<button id="login-button">Login</button>
-				</form>
-				<? } ?>
-				<? if ($logged_fl == "yes") { ?>
+					<button id="show-login-form-button">Login</button>
+				<? } else { ?>
 					<a href="<?= $this->site_url; ?>index.php?component=authorization&action=logout"><button id="logout-button">Logout</button></a>
 				<? } ?>
+				
+				<div style="display: none;">
+					<div class="box-modal" id="exampleModal">
+						<div class="box-modal_close arcticmodal-close">закрыть</div>
+						<form action="<?= $this->site_url; ?>index.php?component=authorization" method="post" id="login-form">
+							<table class="login-form-modal">
+								<tr>
+									<td>
+										<div class="login-email"><h3>Email:</h3> <input type="text" name="login"></input></div>
+									</td>
+									<td>
+										<div class="login-pass"><h3>Password:</h3>  <input type="password" name="password"></input></div>
+									</td>
+								</tr>
+							</table>
+							<input type="hidden" name="successfull_url" value=<?= $this->current_url; ?>></input>
+							<button id="login-button">Login</button>
+						</form>						
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
