@@ -1,8 +1,9 @@
 <?
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.chained.js"></script>';
+	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.cookie.js"></script>';
 ?>
 <div class="profile-wrapper">
-	<form action="<?= $this->site_url; ?>index.php?component=partner_finder&action=set" method="post">
+	<form id="profile-coef" action="<?= $this->site_url; ?>index.php?component=partner_finder&action=set" method="post">
 		<input type="hidden" name="id" value="<?= $profile->id; ?>">
 		<input type="hidden" name="station_id" value="<?= $profile->station_id; ?>">
 		<input type="hidden" name="creation_date" value="<?= $profile->creation_date; ?>">
@@ -92,9 +93,25 @@
 			</tr>
 		</table>
 		
-		
-		<button>Сохранить</button>		
+		<? if ($unattached_image) { ?>
+			Фотография:
+			<input type="hidden" name="image" value="<?= $unattached_image->link; ?>"></input>
+			<img src="<?= $unattached_image->link; ?>"></img>
+		<? } elseif ($profile->image) { ?>
+			Фотография:
+			<input type="hidden" name="image" value="<?= $profile->image; ?>"></input>
+			<img src="<?= $profile->image; ?>"></img>
+		<? } ?>			
 	</form>
+	
+	<form id="uploader-form" enctype="multipart/form-data" action="index.php/?component=partner_finder&action=upload" method="post">
+		<input id="uploader-return_url" type="hidden" name="return_url" value="<?= $this->current_url; ?>"></input>
+			
+		<a style="cursor: pointer;" id="uploader-choose-button">Выбрать</a>
+		<input id="uploader-choose-input" name="upl" type="file" accept="image/jpeg,image/png,image/gif"></input>
+	</form>
+	
+	<button id="profile-coef-submit-button">Сохранить</button>
 </div>
 
 <script>
@@ -115,5 +132,20 @@
 		$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=<?= $profile->region_id; ?>', function() {
 			$('#city_id-wrapper select[name=city_id] [value=<?= $profile->city_id; ?>]').attr('selected', 'selected');
 		});
+		
+	
+		// Upload images
+		$('#uploader-form').on('change', function() {
+			var return_url = $('#uploader-return_url').val();
+			var coef_vars = $('#profile-coef').serialize();
+
+			$.cookie('profile_stored_data', coef_vars, { expires: 1 });
+			
+			$(this).submit();
+		});
+		
+		$('#profile-coef-submit-button').on('click', function() {
+			$('#profile-coef').submit();
+		});	
 	});
 </script>

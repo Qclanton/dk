@@ -76,7 +76,7 @@ class Users extends Models {
 	}
 	
 	public function getUnattachedImages($user_id) {
-		$query = "SELECT `link`, `expiration_date` FROM `users_unattached_images` WHERE `user_id`=?";
+		$query = "SELECT `link`, `expiration_date` FROM `users_unattached_images` WHERE `user_id`=? ORDER BY `expiration_date` DESC";
 		$images = $this->Database->getObject($query, [$user_id]);
 		
 		return $images;

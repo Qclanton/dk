@@ -22,18 +22,35 @@ class PartnerFinder extends Components {
 				$cities = $this->Geo->getCities($this->get->region_id);
 				$cities_html = $this->getCitiesHtml($cities);
 				echo $cities_html;
+				break;
+			case 'upload':
+				$this->uploadImage();
+				$this->redirect($this->post->return_url);
+				break;
 		}
 	}
 	
 	private function showCoef() {
-		// Get the Profile
-		$profile = $this->Profiles->getProfile($this->user_id);
+		// Use stored data if it is exist, otherwise just get profile
+		if (isset($_COOKIE['profile_stored_data'])) {
+			$profile = [];
+			parse_str($_COOKIE['profile_stored_data'], $profile);
+			setcookie('profile_stored_data', '', time()-1000000000000);
+		}
+		else {		
+			$profile = $this->Profiles->getProfile($this->user_id);
+		}
+		
+		$this->loadModels(['Users']);
+		$this->Users->removeUnattachedImages($this->user_id);		
+		$unattached_images = $this->Users->getUnattachedImages($this->user_id);
 		
 		$vars = [
 			'dance_types' => $this->Profiles->getDanceTypes(),
 			'dancers_classes' => $this->Profiles->getDancersClasses(),
 			'countries' => $this->Geo->getCountries(),
 			'regions' => $this->Geo->getRegions(),
+			'unattached_image' => ($unattached_images ? $unattached_images[0] : false),
 			'profile' => (object)$profile
 		];
 	
@@ -59,5 +76,21 @@ class PartnerFinder extends Components {
 		$html .= '</select>';
 		
 		return $html;	
+	}
+	
+	public function uploadImage() {
+		$this->loadHelpers(['Uploader']);
+		$this->Uploader->allowed_extensions = ['png', 'jpg', 'gif'];		
+		if(!file_exists('uploads/user_' . $this->user_id)) { mkdir('uploads/user_' . $this->user_id); }
+		$this->Uploader->path = 'uploads/user_' . $this->user_id;
+		
+		$result = $this->Uploader->upload();
+		
+		if ($result) {
+			$this->loadModels(['Users']);
+			$this->Users->saveUnattachedImages($this->user_id, $this->Uploader->uploaded_files);
+		}
+		
+		return $result;  
 	}
 }

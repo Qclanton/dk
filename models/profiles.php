@@ -31,7 +31,8 @@ class Profiles extends Models {
 		'region_id' => '1053480',
 		'city_id' => '5469360',
 		'station_id' => null,
-		'phone' => '79261234567'
+		'phone' => '79261234567',
+		'image' => null
 	];
 	
 	public function getProfile($user_id) {
@@ -44,12 +45,12 @@ class Profiles extends Models {
 	}
 	
 	public function setProfile($profile) {
-		$profile = $this->nullValues($profile, ['id', 'user_id', 'station_id']);
+		$profile = $this->nullValues($profile, ['id', 'user_id', 'station_id', 'phone', 'image']);
 		if (!$profile->id) { $profile->creation_date = date('Y-m-d H:i:s'); }
 				
 		$query = "
 			INSERT INTO `profiles` 
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE
 				`sex`=?,
 				`birth_date`=?,
@@ -61,7 +62,8 @@ class Profiles extends Models {
 				`region_id`=?,
 				`city_id`=?,
 				`station_id`=?,
-				`phone`=?			
+				`phone`=?,
+				`image`=?			
 		";
 	
 		$vars = [
@@ -79,6 +81,7 @@ class Profiles extends Models {
 			$profile->city_id,
 			$profile->station_id,
 			$profile->phone,
+			$profile->image,
 			$profile->sex,
 			$profile->birth_date,
 			$profile->height,
@@ -89,7 +92,8 @@ class Profiles extends Models {
 			$profile->region_id,
 			$profile->city_id,
 			$profile->station_id,
-			$profile->phone
+			$profile->phone,
+			$profile->image
 		];
 		
 		$result = $query = $this->Database->executeQuery($query, $vars);
