@@ -27,34 +27,53 @@
 		<? if ($bulletin->id) { ?>
 			Дата создания: <?= $bulletin->creation_date; ?>
 		<? } ?>
-		Название: <input type="text" name="title" value="<?= $bulletin->title; ?>"></input>
-		Описание: <textarea name="description"><?= $bulletin->description; ?></textarea>
-		Цена: <input type="number" step="0.01" placeholder="0.00" name="cost" value="<?= $bulletin->cost; ?>"></input>
-		Размер: <input type="text" name="size" value="<?= $bulletin->size; ?>"></input>
+		<table class="bulletin-top-title">
+			<tr>
+				<td>
+					<div class="bulletin-title"><h3>Название:</h3> <input class="bulletin-name" type="text" name="title" value="<?= $bulletin->title; ?>"></input></div>
+				</td>
+				<td>
+					<div class="bulletin-title"><h3>Цена:</h3>  <input class="bulletin-price" type="number" step="0.01" placeholder="0.00" name="cost" value="<?= $bulletin->cost; ?>"></input></div>
+				</td>
+				<td>
+					<div class="bulletin-title"><h3>Размер:</h3> <input class="bulletin-size" type="text" name="size" value="<?= $bulletin->size; ?>"></input></div>
+				</td>
+			</tr>
+		</table>
 		
-		<button><?= $text_submit; ?></button>
+		<div class="bulletin-description">
+			<h3>Описание:</h3> 
+			<textarea name="description"><?= $bulletin->description; ?></textarea>
+		</div>		
 	</form>
 
-	<form enctype="multipart/form-data" action="index.php/?component=bulletin_board&action=upload" method="post">
+	<form id="uploader-form" enctype="multipart/form-data" action="index.php/?component=bulletin_board&action=upload" method="post">
 		<input id="uploader-return_url" type="hidden" name="return_url" value="<?= $this->current_url; ?>"></input>
 			
 		<a style="cursor: pointer;" id="uploader-choose-button">Выбрать</a>
 		<input id="uploader-choose-input" name="upl[]" type="file" accept="image/jpeg,image/png,image/gif" multiple></input>
-		<input type="submit" value="Загрузить"></input>
-		<a style="cursor: pointer;" id="uploader-load_images-button">Загрузить и сохранить</a>
 	</form>
+	
+	<button id="bulletin-coef-submit-button"><?= $text_submit; ?></button>
 </div>
 <script>
-	$('#uploader-choose-button').on('click', function() {
-		$('#uploader-choose-input').click();
-	});
-	
-	$('#uploader-load_images-button').on('click', function() {
-		var return_url = $('#uploader-return_url').val();
-		var coef_vars = $('#bulletin-coef').serialize();
-
-		$.cookie('bulletin_stored_data--<?= ($bulletin->id ? $bulletin->id : 'new'); ?>', coef_vars, { expires: 1 });
+	$(function() {
+		$('#uploader-choose-button').on('click', function() {
+			$('#uploader-choose-input').click();
+		});
 		
-		$(this).parent().submit();
+		// Upload images
+		$('#uploader-form').on('change', function() {
+			var return_url = $('#uploader-return_url').val();
+			var coef_vars = $('#bulletin-coef').serialize();
+
+			$.cookie('bulletin_stored_data--<?= ($bulletin->id ? $bulletin->id : 'new'); ?>', coef_vars, { expires: 1 });
+			
+			$(this).submit();
+		});
+		
+		$('#bulletin-coef-submit-button').on('click', function() {
+			$('#bulletin-coef').submit();
+		});	
 	});
 </script>

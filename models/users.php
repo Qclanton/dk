@@ -62,7 +62,7 @@ class Users extends Models {
 		$vars = [];
 		$i=0;
 		foreach ($files as $file) {
-			$query .= "(?,?)";
+			$query .= "(?, ?, DATE_ADD(NOW(), INTERVAL 1 HOUR))";
 			$vars[] = $user_id;
 			$vars[] = $file;
 			
@@ -76,7 +76,7 @@ class Users extends Models {
 	}
 	
 	public function getUnattachedImages($user_id) {
-		$query = "SELECT `link` FROM `users_unattached_images` WHERE `user_id`=?";
+		$query = "SELECT `link`, `expiration_date` FROM `users_unattached_images` WHERE `user_id`=?";
 		$images = $this->Database->getObject($query, [$user_id]);
 		
 		return $images;
@@ -85,5 +85,14 @@ class Users extends Models {
 	public function removeUnattachedImages($user_id) {
 		$query = "DELETE FROM `users_unattached_images` WHERE `user_id`=?";
 		$result = $this->Database->executeQuery($query, [$user_id]);
+		
+		return $result;
+	}
+	
+	public function removeExpiredUnattachedImages($user_id) {
+		$query = "DELETE FROM `users_unattached_images` WHERE `user_id`=? AND `expiration_date` < NOW()";
+		$result = $this->Database->executeQuery($query, [$user_id]);
+		
+		return $result;
 	}
 }

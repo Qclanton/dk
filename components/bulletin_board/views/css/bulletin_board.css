@@ -1,0 +1,40 @@
+.bulletin-coef-wrapper {}
+
+.bulletin-top-title {
+	width:100%;}
+
+.bulletin-title h3,
+.bulletin-description h3{
+	font-weight:100;
+	font-size:17px;
+	}
+	
+.bulletin-top-title td{
+	width:33%;
+	}
+	
+.bulletin-name,
+.bulletin-price,
+.bulletin-size {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    height: 30px;
+    padding: 5px;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 95%;}
+	
+.bulletin-description {
+	padding:3px;}
+	
+.bulletin-description textarea{
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    height: 200px;
+    padding: 5px;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 99%;
+	}

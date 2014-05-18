@@ -49,9 +49,11 @@ class BulletinBoard extends Components {
 		// Set attached images
 		$bulletin['images'] = $this->Bulletins->getImages($bulletin_id);
 		
-		// Set unattached iimages
-		$this->loadModels(['Users']);		
+		// Set unattached images
+		$this->loadModels(['Users']);
+		$this->Users->removeExpiredUnattachedImages($this->user_id);		
 		$unattached_images = $this ->Users->getUnattachedImages($this->user_id);
+		
 		
 		// Set vars
 		$vars = [
@@ -117,19 +119,5 @@ class BulletinBoard extends Components {
 			$this->loadModels(['Users']);
 			$this->Users->removeUnattachedImages($this->user_id);
 		}
-	}
-	
-	public function renderLastBulletins($quantity) {
-		$confines = [
-			'order'=>[
-				['column'=>"creation_date", 'side'=>"DESC"]
-			],
-			'limit_qty' => $quantity
-		];
-		$bulletins = $this->Database->getBulletins(null, $confines);
-		
-		// Set View
-		$this->setView('components/bulletin_board/views/last_bulletins.php', ['bulletins'=>$bulletins]);
-		$this->renderViewContent();		
 	}
 }
