@@ -70,22 +70,36 @@
 			<tr>
 				<td>Регион: </td>
 				<td>
-					<select name="region_id">
-						<? foreach ($regions as $region) { ?>						
-							<option
-									class="<?= $region->country_id; ?>"
-									value="<?= $region->id; ?>" 
-									<? if ($region->id == $profile->region_id) { echo 'selected="selected"'; } ?>
-								>
-								<?= $region->title; ?>
-							</option>
-						<? } ?>
-					</select>
+					<div id="region_id-wrapper">
+						<select name="region_id">
+							<? foreach ($regions as $region) { ?>						
+								<option
+										value="<?= $region->id; ?>" 
+										<? if ($region->id == $profile->region_id) { echo 'selected="selected"'; } ?>
+									>
+									<?= $region->title; ?>
+								</option>
+							<? } ?>
+						</select>
+					</div>
 				</td>
 			</tr>		
 			<tr>
 				<td>Город: </td>
-				<td><div id="city_id-wrapper"></div></td>
+				<td>
+					<div id="city_id-wrapper">
+						<select name="city_id">
+							<? foreach ($cities as $city) { ?>						
+								<option
+										value="<?= $city->id; ?>" 
+										<? if ($city->id == $profile->city_id) { echo 'selected="selected"'; } ?>
+									>
+									<?= $city->title; ?>
+								</option>
+							<? } ?>
+						</select>
+					</div>
+				</td>
 			</tr>
 			<tr>
 				<td>Номер телефона: </td>
@@ -115,42 +129,55 @@
 </div>
 
 <script>
-	$(function() {
-		// Set cities depends of region			
-		$('select[name=region_id]').on('change', function() {
-			$('#city_id-wrapper').html();
-			$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=' + $(this).val());
-		})
+$(function() {
+	function setCities(region_id) {
+		var country_id = $('select[name=country_id]').val();
 		
-		// Set regions depends of country
-		$('select[name=region_id]').chained('select[name=country_id]');
-		
-		// Set dancers classes depends of dance type
-		$('select[name=dancer_class_id]').chained('select[name=dance_type_id]');
-		
-
-		
+		$('#city_id-wrapper').html('<img class="loading" src="<?= $this->site_url ?>components/partner_finder/views/images/loading.gif"></img>');		
+		if (country_id == '1') {			
+			$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=' + region_id);
+		}
+		else {			
+			$('#city_id-wrapper').html('<input type="text" name="city"></input>');
+		}
+	}
 	
-		// Upload images
-		$('#uploader-form').on('change', function() {
-			var return_url = $('#uploader-return_url').val();
-			var coef_vars = $('#profile-coef').serialize();
-
-			$.cookie('profile_stored_data', coef_vars, { expires: 1 });
+	// Set regions depends of country
+	$('select[name=country_id]').on('change', function() {
+		$('#region_id-wrapper').html('<img class="loading" src="<?= $this->site_url ?>components/partner_finder/views/images/loading.gif"></img>');
+		$('#region_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getregions&country_id=' + $(this).val(), function() { 
+		
+			// Set cities handler
+			$('select[name=region_id]').on('change', function() { setCities($(this).val()); });	
 			
-			$(this).submit();
+			//Init cities handler
+			$('select[name=region_id]').change();			
 		});
+	});		
+
+	// Set cities depends of regions
+	$('select[name=region_id]').on('change', function() { setCities($(this).val()); });
+	
+	
+	// Set dancers classes depends of dance type
+	$('select[name=dancer_class_id]').chained('select[name=dance_type_id]');
+	
+
+
+	
+
+	// Upload images
+	$('#uploader-form').on('change', function() {
+		var return_url = $('#uploader-return_url').val();
+		var coef_vars = $('#profile-coef').serialize();
+
+		$.cookie('profile_stored_data', coef_vars, { expires: 1 });
 		
-		$('#profile-coef-submit-button').on('click', function() {
-			$('#profile-coef').submit();
-		});
-		
-		
-		
-		
-		// Set default city
-		$('#city_id-wrapper').load('<?= $this->site_url ?>index.php/?load_template_fl=no&component=partner_finder&action=getcities&region_id=<?= $profile->region_id; ?>', function() {
-			$('#city_id-wrapper select[name=city_id] [value=<?= $profile->city_id; ?>]').attr('selected', 'selected');
-		});
+		$(this).submit();
 	});
+	
+	$('#profile-coef-submit-button').on('click', function() {
+		$('#profile-coef').submit();
+	});
+});
 </script>

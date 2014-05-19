@@ -93,8 +93,11 @@ body p, tr, td, th, ol, ul, li {
 	float: right;
 	position: relative;
 	right: 0;
-	top: 22px;
+	top: 30px;
 	width: 282px;}
+	
+#login-form--wrapper a{
+	text-decoration:none;}
 	
 .login-form-modal {
 	width:100%;}
@@ -148,6 +151,8 @@ body p, tr, td, th, ol, ul, li {
 
 #logout-button  {
 	float:right;}
+	
+
 	
 /*main container */
 

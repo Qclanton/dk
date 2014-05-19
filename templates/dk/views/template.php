@@ -4,7 +4,7 @@
 	<!-- <link href="<?= $this->site_url; ?>templates/basic/views/images/favicon.png" rel="shortcut icon" type="image/x-icon" /> -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	%head%
-	<script src="templates/dk/views/js/jquery.arcticmodal-0.3.min.js"></script>
+	<script src="<?= $this->site_url; ?>templates/dk/views/js/jquery.arcticmodal-0.3.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/css/jquery.arcticmodal-0.3.css" />
 	<link rel="stylesheet" type="text/css" href="<?= $this->site_url; ?>templates/dk/views/css/simple.css" />
 	<script>
@@ -54,6 +54,7 @@
 						<li><a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=create">Создать объявление</a></li>
 						<li><a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=showmylist">Мои объявления</a></li>
 						<li><a href="<?= $this->site_url; ?>index.php/?component=messages&action=showmylist">Мои сообщения</a></li>
+						<li><a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=myprofile">Моя анкета</a></li>
 					<? } ?>
 				</ul>
 				

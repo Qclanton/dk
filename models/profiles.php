@@ -47,6 +47,14 @@ class Profiles extends Models {
 	public function setProfile($profile) {
 		$profile = $this->nullValues($profile, ['id', 'user_id', 'station_id', 'phone', 'image']);
 		if (!$profile->id) { $profile->creation_date = date('Y-m-d H:i:s'); }
+		if (!$profile->city_id && $profile->city) {
+			$this->loadModels(['Geo']);
+			$city_id = $this->Geo->getCityId($profile->region_id, $profile->city);
+			if (!$city_id) {
+				$city_id = $this->Geo->addCity($profile->region_id, $profile->city);
+			}
+			$profile->city_id = $city_id;
+		}
 				
 		$query = "
 			INSERT INTO `profiles` 

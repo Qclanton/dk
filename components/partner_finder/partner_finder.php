@@ -23,6 +23,11 @@ class PartnerFinder extends Components {
 				$cities_html = $this->getCitiesHtml($cities);
 				echo $cities_html;
 				break;
+			case 'getregions':
+				$regions = $this->Geo->getRegions($this->get->country_id);
+				$regions_html = $this->getRegionsHtml($regions);
+				echo $regions_html;
+				break;
 			case 'upload':
 				$this->uploadImage();
 				$this->redirect($this->post->return_url);
@@ -46,12 +51,13 @@ class PartnerFinder extends Components {
 		$this->Users->removeExpiredUnattachedImages($this->user_id);		
 		$unattached_images = $this->Users->getUnattachedImages($this->user_id);
 
-		
+	
 		$vars = [
 			'dance_types' => $this->Profiles->getDanceTypes(),
 			'dancers_classes' => $this->Profiles->getDancersClasses(),
 			'countries' => $this->Geo->getCountries(),
-			'regions' => $this->Geo->getRegions(),
+			'regions' => $this->Geo->getRegions($profile['country_id']),
+			'cities' => $this->Geo->getCities($profile['region_id']),
 			'unattached_image' => ($unattached_images ? $unattached_images[0] : false),
 			'profile' => (object)$profile
 		];
@@ -74,6 +80,15 @@ class PartnerFinder extends Components {
 		$html = '<select name="city_id">';
 		foreach ($cities as $city) {
 			$html .= '<option value="' . $city->id . '">' . $city->title . '</option>';
+		}
+		$html .= '</select>';
+		
+		return $html;	
+	}
+	private function getRegionsHtml($regions) {
+		$html = '<select name="region_id">';
+		foreach ($regions as $region) {
+			$html .= '<option value="' . $region->id . '">' . $region->title . '</option>';
 		}
 		$html .= '</select>';
 		
