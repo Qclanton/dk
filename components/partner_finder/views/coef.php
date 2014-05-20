@@ -1,4 +1,5 @@
 <?
+	$this->content['head'] .= '<link rel="stylesheet" type="text/css" href="' . $this->site_url . 'components/partner_finder/views/css/profile.css" />';
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.chained.js"></script>';
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.cookie.js"></script>';
 ?>
@@ -9,9 +10,29 @@
 		<input type="hidden" name="creation_date" value="<?= $profile->creation_date; ?>">
 		<input type="hidden" name="return_url" value="<?= $this->current_url; ?>">
 		
-		<table>
+		<table class="profile-photo">
 			<tr>
-				<td>Пол:</td>
+				<td class="profile-photo-title">
+					<h3>Фотография профиля</h3>
+				</td>
+			</tr>
+			<tr>
+				<td class="profile-photo-content">
+					<? if ($unattached_image) { ?>
+						<input type="hidden" name="image" value="<?= $unattached_image->link; ?>"></input>
+						<img src="<?= $unattached_image->link; ?>"></img>
+					<? } elseif ($profile->image) { ?>
+						<input type="hidden" name="image" value="<?= $profile->image; ?>"></input>
+						<img src="<?= $profile->image; ?>"></img>
+					<? } ?>	
+				</td>
+			</tr>
+		</table>
+
+		
+		<table class="profile-table">
+			<tr>
+				<td class="profile-table-title">Пол:</td>
 				<td>
 					<select name="sex">
 						<option value="MALE" <? if ($profile->sex == "MALE") { echo 'selected="selected"'; } ?>>Мужской</option>
@@ -20,19 +41,19 @@
 				</td>
 			</tr>			
 			<tr>
-				<td>Дата рождения:</td>
+				<td class="profile-table-title">Дата рождения:</td>
 				<td><input type="date" name="birth_date" value="<?= $profile->birth_date; ?>"></input></td>
 			</tr>			
 			<tr>
-				<td>Рост (без обуви):</td>
+				<td class="profile-table-title">Рост (без обуви):</td>
 				<td><input type="number" name="height" min="100" max="300" value="<?= $profile->height; ?>"></input></td>
 			</tr>										
 			<tr>
-				<td>Рост (с обувью):</td>
+				<td class="profile-table-title">Рост (с обувью):</td>
 				<td><input type="number" name="heightshoes" min="100" max="300" value="<?= $profile->heightshoes; ?>"></input></td>
 			</tr>
 			<tr>
-				<td>Тип танца:</td>
+				<td class="profile-table-title">Тип танца:</td>
 				<td>
 					<select name="dance_type_id">
 						<? foreach ($dance_types as $dance_type) { ?>						
@@ -42,7 +63,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Класс танцора: </td>
+				<td class="profile-table-title">Класс танцора: </td>
 				<td>
 					<select name="dancer_class_id">
 						<? foreach ($dancers_classes as $dancer_class) { ?>						
@@ -58,7 +79,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Страна: </td>
+				<td class="profile-table-title">Страна: </td>
 				<td>
 					<select name="country_id">
 						<? foreach ($countries as $country) { ?>						
@@ -68,7 +89,7 @@
 				</td>
 			</td>
 			<tr>
-				<td>Регион: </td>
+				<td class="profile-table-title">Регион: </td>
 				<td>
 					<div id="region_id-wrapper">
 						<select name="region_id">
@@ -85,7 +106,7 @@
 				</td>
 			</tr>		
 			<tr>
-				<td>Город: </td>
+				<td class="profile-table-title">Город: </td>
 				<td>
 					<div id="city_id-wrapper">
 						<select name="city_id">
@@ -102,26 +123,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Номер телефона: </td>
+				<td class="profile-table-title">Номер телефона: </td>
 				<td><input type="text" name="phone" value="<?= $profile->phone; ?>"></input></td>
 			</tr>
-		</table>
-		
-		<? if ($unattached_image) { ?>
-			Фотография (свежезагруженная):
-			<input type="hidden" name="image" value="<?= $unattached_image->link; ?>"></input>
-			<img src="<?= $unattached_image->link; ?>"></img>
-		<? } elseif ($profile->image) { ?>
-			Фотография:
-			<input type="hidden" name="image" value="<?= $profile->image; ?>"></input>
-			<img src="<?= $profile->image; ?>"></img>
-		<? } ?>			
+		</table>		
 	</form>
 	
 	<form id="uploader-form" enctype="multipart/form-data" action="index.php/?component=partner_finder&action=upload" method="post">
-		<input id="uploader-return_url" type="hidden" name="return_url" value="<?= $this->current_url; ?>"></input>
-			
-		<a style="cursor: pointer;" id="uploader-choose-button">Выбрать</a>
+		<input id="uploader-return_url" type="hidden" name="return_url" value="<?= $this->current_url; ?>">Обновить фотографию профиля</input>
 		<input id="uploader-choose-input" name="upl" type="file" accept="image/jpeg,image/png,image/gif"></input>
 	</form>
 	

@@ -2,8 +2,13 @@
 
 
 <section id="quote">
-	<h3>Танец — это твой пульс, биение твоего сердца, твое дыхание. <br />
-	Это ритм твоей жизни. Это выражение во времени и движении, в счастье, радости, грусти и зависти.<br />(Жак д'Амбуаз) </h3>
+	<div class="wrapper">
+		<div id="blockquote">
+		<p>Танец — это твой пульс, биение твоего сердца, твое дыхание.
+		Это ритм твоей жизни. Это выражение во времени и движении, в счастье, радости, грусти и зависти.</p>
+		<h3>Жак д'Амбуаз </h3>
+		</div>
+	</div>
 </section>
 
 <section id="last-form">
@@ -29,12 +34,31 @@
 <section id="why-dk">
 	<div class="wrapper">
 		<div class="why-dk">
-			<h3>Что мы можем предложить?</h3>
-			<p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet.</p>
+			<h3>Dance Like a King это</h3>
+			<p>- Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet.</p>
+			<p>- Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet.</p>
 		</div>
-		<div class="reviews">
+		<div id="reviews">
 			<h3>Отзывы о нас</h3>
-			<p>Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet.</p>
+			<div class="review-block">
+				<div class="review-avatar">
+					<img src="/dk/components/main/views/images/avatar1.jpg" />
+				</div>
+				<div class="review-text">
+					<p>"Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet."</p>
+					<div class="review-author">Jimmy Bow </div>
+				</div>
+			</div>
+			<div class="review-block">
+				<div class="review-avatar">
+					<img src="/dk/components/main/views/images/avatar1.jpg" />
+				</div>
+				<div class="review-text">
+					<p>"Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. Mauris accumsan nulla vel diam. Sed in lacus ut enim adipiscing aliquet."</p>
+					<div class="review-author">Jimmy Bow </div>
+				</div>
+			</div>
+		</div>
 	</div>
 </section>
 

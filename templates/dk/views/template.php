@@ -14,6 +14,13 @@
 			});
 		});
 	</script>
+	<? if ($this->get->component == 'main') { ?>
+		<style> 
+			#fixed-block {
+				height: 70% !important; 
+			}
+		</style>
+	<? } ?>
 </head>
 <body>
 
@@ -89,15 +96,17 @@
 			</div>
 		</div>
 	</div>
-	<!---<div id="breadcrumbs"> 
-		<div id="breadcrumbs-wrapper">
-			%breadcrumbs%
-		</div>
-	</div>--->
 	<div id="error">
 		%error%
 	</div>
 </section>
+<? if ($this->get->component != 'main') { ?>
+<section id="breadcrumbs"> 
+	<div id="breadcrumbs-wrapper">
+		%breadcrumbs%
+	</div>
+</section>
+<? } ?>
 <section id="main-container">
 	%main%
 	<div class="content">

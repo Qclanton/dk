@@ -40,7 +40,7 @@ class BulletinBoard extends Components {
 			$bulletin = [];
 			$id = (empty($bulletin_id) ? 'new' : $bulletin_id);
 			parse_str($_COOKIE['bulletin_stored_data--' . $id], $bulletin);
-			// setcookie('bulletin_stored_data--' . $id, '', time()-1000000000000);
+			setcookie('bulletin_stored_data--' . $id, '', time()-1000000000000);
 		}
 		else {		
 			$bulletin = $this->Bulletins->getBulletin($bulletin_id);
