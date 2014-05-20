@@ -30,10 +30,10 @@ $vars = [
 	'user_id' => $user_id,
 	'Database' => $Database	
 ];
-
+if (!isset($vars['get']->component)) { $vars['get']->component = "main"; }
 
 // Load component 
-$component_name = (isset($vars['get']->component) ? $vars['get']->component : "main");
+$component_name = $vars['get']->component;
 $component_file = "components/" . $component_name . "/" . $component_name . ".php";
 if (file_exists($component_file)) {
 	require_once "components/" . $component_name . "/" . $component_name . ".php";

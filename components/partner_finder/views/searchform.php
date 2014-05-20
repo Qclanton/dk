@@ -1,7 +1,5 @@
 <?
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.chained.js"></script>';
-	
-	echo "Seacrh: <br><br><br>"; var_dump($search); echo "Seacrh: <br><br><br>";
 ?>
 <div class="searchpartner_form-wrapper">
 	<form id="searchpartner-form" action="<?= $this->site_url; ?>index.php?component=partner_finder&action=search" method="post">
