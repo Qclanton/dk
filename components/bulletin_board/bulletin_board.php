@@ -46,14 +46,14 @@ class BulletinBoard extends Components {
 			$bulletin = $this->Bulletins->getBulletin($bulletin_id);
 		}
 
-		// Set attached images
+		// Get attached images
 		$bulletin['images'] = $this->Bulletins->getImages($bulletin_id);
 		
-		// Set unattached images
+		// Get unattached images
 		$this->loadModels(['Users']);
-		$this->Users->removeExpiredUnattachedImages($this->user_id);		
+		// $this->Users->removeExpiredUnattachedImages($this->user_id);	
 		$unattached_images = $this ->Users->getUnattachedImages($this->user_id);
-		
+		$this->Users->removeUnattachedImages($this->user_id);
 		
 		// Set vars
 		$vars = [
@@ -98,8 +98,9 @@ class BulletinBoard extends Components {
 		$bulletin->user_id = $this->user_id; 
 		$bulletin_id = $this->Bulletins->setBulletin($bulletin);
 		
-		if ($bulletin->images) {
+		if (isset($bulletin->images)) {
 			$this->Bulletins->attachImages($bulletin_id, $bulletin->images);
+			$this->Bulletins->setDefaultImage($bulletin_id, $bulletin->images[0]);
 			$this->loadModels(['Users']);
 			$this->Users->removeUnattachedImages($this->user_id);
 		}

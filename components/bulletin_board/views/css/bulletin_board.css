@@ -38,3 +38,36 @@
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     width: 99%;
 	}
+
+#uploader-choose-input {}
+	
+.unattached-pics,	
+.attached-pics {
+	width:100%;
+	background:none repeat scroll 0 0 #F5F5F5;
+	padding:15px;
+	border-radius:2px;
+	border:1px solid #CCCCCC;}
+
+.unattached-pics img,
+.attached-pics img{
+	width:180px;
+	padding-right:15px;}
+	
+.prev-img-h3{
+	font-weight:100;
+	font-size:17px;}
+	
+#bulletin-coef-submit-button {
+    background: none repeat scroll 0 0 #731630;
+    border: 1px solid #B3B3B3;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 15px;
+    height: 39px;
+    line-height: 1.5;
+    margin: 10px 0;
+    padding: 1px 17px;
+    text-align: center;
+    width: 100%;}

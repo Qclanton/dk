@@ -8,19 +8,9 @@
 		<input type="hidden" name="id" value="<?= $bulletin->id; ?>"></input>
 		<input type="hidden" name="creation_date" value="<?= $bulletin->creation_date; ?>"></input>
 		<input type="hidden" name="return_url" value="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=showmylist"></input>
-		
-		<? if ($bulletin->images) { ?>
-			Previews of the attached images:
-			<? foreach ($bulletin->images as $image) { ?>
-				<img src="<?= $image->link; ?>"></img>
-			<? } ?>
-		<? } ?>
-
 		<? if ($unattached_images) { ?>
-			Previews of the unattached images:
 			<? foreach ($unattached_images as $image) { ?>
 				<input type="hidden" name="images[]" value="<?= $image->link; ?>"></input>
-				<img src="<?= $image->link; ?>"></img>
 			<? } ?>
 		<? } ?>
 		
@@ -53,7 +43,30 @@
 		<a style="cursor: pointer;" id="uploader-choose-button">Выбрать</a>
 		<input id="uploader-choose-input" name="upl[]" type="file" accept="image/jpeg,image/png,image/gif" multiple></input>
 	</form>
-	
+	<? if ($bulletin->images) { ?>
+	<h3 class="prev-img-h3">Предпросмотр прикрепленных изображений:</h3>
+	<table class="attached-pics">
+		<tr>
+			<td>
+				<? foreach ($bulletin->images as $image) { ?>
+					<img src="<?= $image->link; ?>"></img>
+				<? } ?>
+			</td>
+		</tr>
+	</table>
+	<? } ?>
+	<? if ($unattached_images) { ?>
+	<h3 class="prev-img-h3">Предпросмотр:</h3>
+	<table class="unattached-pics">
+		<tr>
+			<td>
+				<? foreach ($unattached_images as $image) { ?>
+					<img src="<?= $image->link; ?>"></img>
+				<? } ?>
+			</td>
+		</tr>
+	</table>
+	<? } ?>
 	<button id="bulletin-coef-submit-button"><?= $text_submit; ?></button>
 </div>
 <script>

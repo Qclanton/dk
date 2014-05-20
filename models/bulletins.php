@@ -3,10 +3,12 @@ namespace Models;
  
 class Bulletins extends Models {
 	const BULLETIN_QUERY_BASE_SUBJECT="
-		b.*
+		b.*,
+		bi.`link` as 'default_image'
 	";
 	const BULLETIN_QUERY_BASE_OBJECT = "
-		`bulletins` b
+		`bulletins` b LEFT JOIN
+		`bulletins_images` bi ON (`bi`.bulletin_id=b.`id` AND bi.`default_fl`='YES')
 	";
 	
 		
@@ -19,7 +21,7 @@ class Bulletins extends Models {
 		'cost' => 0,
 		'size'=>''		
 	];
-	public function getBulletin($id=null) {
+	public function getBulletin($id) {
 		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE b.`id`=?";
 		$bulletin = $this->Database->getRow($query, [$id]);
 		
@@ -81,7 +83,7 @@ class Bulletins extends Models {
 		$vars = [];
 		$i=0;
 		foreach ($images as $image) {
-			$query .= "(?,?)";
+			$query .= "(?,?, 'NO')";
 			$vars[] = $bulletin_id;
 			$vars[] = $image;
 			
@@ -90,6 +92,16 @@ class Bulletins extends Models {
 		}
 		
 		$result = $this->Database->executeQuery($query, $vars);
+
+		return $result;
+	}
+	
+	public function setDefaultImage($bulletin_id, $link) {		
+		$query = "UPDATE `bulletins_images` SET `default_fl`='NO' WHERE `bulletin_id`=?";
+		$this->Database->executeQuery($query, [$bulletin_id]);
+		
+		$query = "UPDATE `bulletins_images` SET `default_fl`='YES' WHERE `bulletin_id`=? AND `link`=?";
+		$this->Database->executeQuery($query, [$bulletin_id, $link]);
 	}
 	
 	public function getImages($bulletin_id) {
