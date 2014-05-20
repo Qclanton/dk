@@ -50,6 +50,7 @@
 			<div id="menu">
 				<ul>
 					<li><a href="<?= $this->site_url; ?>">Главная</a></li>
+					<li><a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=search">Поиск партнера</a></li>
 					<? if ($logged_fl == "yes") { ?>
 						<li><a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=create">Создать объявление</a></li>
 						<li><a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=showmylist">Мои объявления</a></li>

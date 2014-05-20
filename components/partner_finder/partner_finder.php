@@ -18,14 +18,27 @@ class PartnerFinder extends Components {
 				$this->Profiles->setProfile($this->post);
 				$this->redirect($this->post->return_url);
 				break;
+			case 'profile':
+				$this->showProfile($this->get->id);
+				break;
+			case 'rendersearchform':
+				$seacrh = ($this->post->search ? array_merge($this->Profiles->default_search, $this->post->search) : $this->Profiles->default_search);
+				$this->renderSearchPartnerForm($search);
+				break;
+			case 'search':
+				$seacrh = (isset($this->post->search) ? array_merge($this->Profiles->default_search, $this->post->search) : $this->Profiles->default_search);
+				$this->showSearchResults($seacrh);
+				break;
 			case 'getcities':
 				$cities = $this->Geo->getCities($this->get->region_id);
-				$cities_html = $this->getCitiesHtml($cities);
+				$listname = (isset($this->get->listname) ? $this->get->listname : 'city_id');
+				$cities_html = $this->getCitiesHtml($cities, $listname);
 				echo $cities_html;
 				break;
 			case 'getregions':
 				$regions = $this->Geo->getRegions($this->get->country_id);
-				$regions_html = $this->getRegionsHtml($regions);
+				$listname = (isset($this->get->listname) ? $this->get->listname : 'region_id');
+				$regions_html = $this->getRegionsHtml($regions, $listname);
 				echo $regions_html;
 				break;
 			case 'upload':
@@ -43,7 +56,7 @@ class PartnerFinder extends Components {
 			setcookie('profile_stored_data', '', time()-1000000000000);
 		}
 		else {		
-			$profile = $this->Profiles->getProfile($this->user_id);
+			$profile = $this->Profiles->getProfile(null, $this->user_id);
 		}
 		
 		// Attach image
@@ -76,8 +89,65 @@ class PartnerFinder extends Components {
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}
 	
-	private function getCitiesHtml($cities) {
-		$html = '<select name="city_id">';
+	private function showProfile($id) {
+		$profile = $this->Profiles->getProfile($id);
+		
+		// Set View
+		$this->setView('components/partner_finder/views/profile.php', ['profile'=>(object)$profile]);
+		$this->renderViewContent();
+		$this->content['top'] = $this->View->content;		
+		
+		// Set Bradcrumbs
+		$this->loadHelpers(['Breadcrumbs']);
+		$breadcrumbs = [
+			'Поиск партнера' => '',
+			'Анкета ' . $profile['id'] => ''
+		];
+		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
+	}
+	
+	private function showSearchResults($search) {
+		$results = $this->Profiles->search($search);
+
+		// Set View
+		$this->setView('components/partner_finder/views/searchresults.php', ['results'=>$results]);
+		$this->renderViewContent();
+		$this->content['top'] = $this->View->content;
+					
+		$this->renderSearchForm($search);
+		$this->content['right'] = $this->View->content;
+		
+		// Set Bradcrumbs
+		$this->loadHelpers(['Breadcrumbs']);
+		$breadcrumbs = [
+			'Поиск партнера' => '',
+			'Результаты поиска' => ''
+		];
+		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
+	}
+	
+	
+	private function renderSearchForm($search) {
+		$vars = [
+			'dance_types' => $this->Profiles->getDanceTypes(),
+			'dancers_classes' => $this->Profiles->getDancersClasses(),
+			'countries' => $this->Geo->getCountries(),
+			'search' => (object)$search
+		];
+		
+		if ($search['region_id'] && $search['country_id']) {
+			$vars['regions'] = $this->Geo->getRegions($search['country_id']);
+		}
+		if ($search['city_id'] && $search['region_id'] ) {
+			$vars['cities'] = $this->Geo->getCities($search['region_id']);
+		}
+					
+		$this->setView('components/partner_finder/views/searchform.php', $vars);
+		$this->renderViewContent();
+	}
+	
+	private function getCitiesHtml($cities, $listname) {
+		$html = '<select name="' . $listname . '">';
 		foreach ($cities as $city) {
 			$html .= '<option value="' . $city->id . '">' . $city->title . '</option>';
 		}
@@ -85,8 +155,8 @@ class PartnerFinder extends Components {
 		
 		return $html;	
 	}
-	private function getRegionsHtml($regions) {
-		$html = '<select name="region_id">';
+	private function getRegionsHtml($regions, $listname) {
+		$html = '<select name="' . $listname . '">';
 		foreach ($regions as $region) {
 			$html .= '<option value="' . $region->id . '">' . $region->title . '</option>';
 		}
