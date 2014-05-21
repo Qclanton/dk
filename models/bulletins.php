@@ -31,7 +31,7 @@ class Bulletins extends Models {
 	}
 	
 	public function getBulletins($user_id=null, $params=null) {
-		$query = "SELECT " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE ?";
+		$query = "SELECT SQL_CALC_FOUND_ROWS " . self::BULLETIN_QUERY_BASE_SUBJECT . " FROM " .  self::BULLETIN_QUERY_BASE_OBJECT . " WHERE ?";
 		$vars = ['1'];
 		
 		if ($user_id) {
