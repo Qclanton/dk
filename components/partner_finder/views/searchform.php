@@ -1,4 +1,5 @@
 <?
+	// echo '<br><br><br>'; var_dump($search->confines);
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.chained.js"></script>';
 ?>
 <div class="searchpartner_form-wrapper">

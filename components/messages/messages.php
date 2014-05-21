@@ -66,7 +66,7 @@ class Messages extends Components {
 		$user = $this->Users->getUser($author_id);
 		$breadcrumbs = [
 			'Мои сообщения' => $this->site_url . 'index.php/?component=messages&action=showmylist',
-			'Переписка с ' . $user['name']
+			'Переписка с ' . $user['name'] => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);		
 	}

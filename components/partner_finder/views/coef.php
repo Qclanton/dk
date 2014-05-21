@@ -1,7 +1,10 @@
 <?
 	$this->content['head'] .= '<link rel="stylesheet" type="text/css" href="' . $this->site_url . 'components/partner_finder/views/css/profile.css" />';
+	$this->content['head'] .= '<link rel="stylesheet" type="text/css" href="' . $this->site_url . 'components/partner_finder/views/css/jquery-ui.css" />';
+	
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.chained.js"></script>';
 	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery.cookie.js"></script>';
+	$this->content['head'] .= '<script src="' . $this->site_url . 'components/partner_finder/views/js/jquery-ui.min.js"></script>';
 ?>
 <div class="profile-wrapper">
 	<form id="profile-coef" action="<?= $this->site_url; ?>index.php?component=partner_finder&action=set" method="post">
@@ -9,7 +12,25 @@
 		<input type="hidden" name="station_id" value="<?= $profile->station_id; ?>">
 		<input type="hidden" name="creation_date" value="<?= $profile->creation_date; ?>">
 		<input type="hidden" name="return_url" value="<?= $this->current_url; ?>">
-		
+		<table class="personal-menu">
+			<tr>
+				<td>
+					<a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=profile&id=<?= $this->user_id; ?>">Моя анкета</a>
+				</td>
+				<td>
+					<a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=showmylist‏">Мои объявления</a>
+				</td>
+				<td>
+					<a href="<?= $this->site_url; ?>index.php/?component=bulletin_board&action=create‏‏">Создать объявления</a>
+				</td>
+				<td>				
+					<a href="<?= $this->site_url; ?>index.php/?component=messages&action=showmylist‏‏">Мои сообщения</a>
+				</td>
+				<td>
+					<a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=search‏">Найти партнера</a>
+				</td>
+			</tr>
+		</table>
 		<table class="profile-photo">
 			<tr>
 				<td class="profile-photo-title">
@@ -30,9 +51,9 @@
 		</table>
 
 		
-		<table class="profile-table">
+		<table class="profile-table-edit">
 			<tr>
-				<td class="profile-table-title">Пол:</td>
+				<td class="profile-table-edit-title">Пол:</td>
 				<td>
 					<select name="sex">
 						<option value="MALE" <? if ($profile->sex == "MALE") { echo 'selected="selected"'; } ?>>Мужской</option>
@@ -42,7 +63,7 @@
 			</tr>			
 			<tr>
 				<td class="profile-table-title">Дата рождения:</td>
-				<td><input type="date" name="birth_date" value="<?= $profile->birth_date; ?>"></input></td>
+				<td><input type="text" class="date" name="birth_date" value="<?= $profile->birth_date; ?>"></input></td>
 			</tr>			
 			<tr>
 				<td class="profile-table-title">Рост (без обуви):</td>
@@ -187,6 +208,17 @@ $(function() {
 	
 	$('#profile-coef-submit-button').on('click', function() {
 		$('#profile-coef').submit();
+	});
+	
+
+});
+</script>
+<script>
+$(function() {
+	$('.date').datepicker({
+		changeMonth: true,
+		changeYear: true,
+		dateFormat: 'yy-mm-dd'
 	});
 });
 </script>

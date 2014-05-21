@@ -25,7 +25,7 @@ class BulletinBoard extends Components {
 				$this->showList($this->user_id);
 				break;
 			case 'showlist':
-				$this->showList($this->user_id);
+				$this->showList();
 				break;
 			case 'upload':
 				$this->uploadImage();
