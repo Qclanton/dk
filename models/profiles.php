@@ -126,7 +126,6 @@ class Profiles extends Models {
 	}
 	
 	// Search
-	public $pagination_data;
 	public $default_search = [
 		'sex' => null,
 		
@@ -145,7 +144,11 @@ class Profiles extends Models {
 		
 		'name' => null,
 		
-		'pagination' => null
+		'confines' => [
+			'order'=>[
+				['column'=>"creation_date", 'side'=>"DESC"]
+			]
+		]
 	];
 	public function search($params) {
 		$params = array_merge($this->default_search, $params);
@@ -206,18 +209,13 @@ class Profiles extends Models {
 		}
 		
 		
-		if ($params['pagination']) {
-			$confines = $this->getConfines($params['pagination']);
+		if ($params['confines']) {
+			$confines = $this->getConfines($params['confines']);
 			$query .= $confines['query'];
 			$vars = array_merge($vars, $confines['vars']);
 		}
 		
 		$result = $this->Database->getObject($query, $vars);
-		if ($result) {
-			$query = "SELECT FOUND_ROWS()";
-			$found_rows = $this->Database->getValue($query);
-			$this->pagination_data['found_rows'] = $found_rows;
-		}
 		
 		return $result;
 	}

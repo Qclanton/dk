@@ -3,6 +3,10 @@
 ?>
 <div class="searchpartner_form-wrapper">
 	<form id="searchpartner-form" action="<?= $this->site_url; ?>index.php?component=partner_finder&action=search" method="post">
+		
+		<input type="hidden" name="search[confines][order][0][column]" value="<?= $search->confines['order'][0]['column']; ?>"></input>
+		<input type="hidden" name="search[confines][order][0][side]" value="<?= $search->confines['order'][0]['side']; ?>"></input>
+	
 		Имя: 
 		<input type="text" name="search[name]" value="<?= $search->name; ?>"></input>
 		
