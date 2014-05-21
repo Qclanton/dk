@@ -1,0 +1,50 @@
+.searchpartner_form-wrapper {
+	width:34%;
+	display:inline-table;
+	}
+	
+.searchform-table-header {
+	background: none repeat scroll 0 0 #731630;
+	color:#FFFFFF;
+	font-weight:100;
+	padding: 5px;
+	text-align:center;
+	margin:5px 0;
+	border-radius:3px;}
+
+.searchform-table,
+.searchform-table-part2 {
+	display:inline-table;
+}
+	
+
+.searchform-table input, select,
+.searchform-table-part2 input, select {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    height: 25px;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    width: 200px;
+}
+
+.from-to {
+	width: 73px !important}
+	
+.searchfotm-name-title {
+    color: #5B5B5B;
+    width: 130px;}
+	
+.search-button {
+	background: none repeat scroll 0 0 #731630;
+    border: 1px solid #B3B3B3;
+    border-radius: 3px;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 15px;
+    height: 39px;
+    line-height: 1.5;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%;}
