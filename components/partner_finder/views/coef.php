@@ -9,7 +9,25 @@
 		<input type="hidden" name="station_id" value="<?= $profile->station_id; ?>">
 		<input type="hidden" name="creation_date" value="<?= $profile->creation_date; ?>">
 		<input type="hidden" name="return_url" value="<?= $this->current_url; ?>">
-		
+		<table class="personal-menu">
+			<tr>
+				<td>
+					<a>Моя анкета</a>
+				</td>
+				<td>
+					<a>Мои объявления</a>
+				</td>
+				<td>
+					<a>Создать объявления</a>
+				</td>
+				<td>				
+					<a>Мои сообщения</a>
+				</td>
+				<td>
+					<a>Найти партнера</a>
+				</td>
+			</tr>
+		</table>
 		<table class="profile-photo">
 			<tr>
 				<td class="profile-photo-title">
@@ -30,9 +48,9 @@
 		</table>
 
 		
-		<table class="profile-table">
+		<table class="profile-table-edit">
 			<tr>
-				<td class="profile-table-title">Пол:</td>
+				<td class="profile-table-edit-title">Пол:</td>
 				<td>
 					<select name="sex">
 						<option value="MALE" <? if ($profile->sex == "MALE") { echo 'selected="selected"'; } ?>>Мужской</option>
