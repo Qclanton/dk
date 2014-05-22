@@ -10,6 +10,21 @@
 	<table class="personal-menu">
 		<tr>
 			<td>
+<<<<<<< HEAD
+				<a>Моя анкета</a>
+			</td>
+			<td>
+				<a>Мои объявления</a>
+			</td>
+			<td>
+				<a>Создать объявления</a>
+			</td>
+			<td>				
+				<a>Мои сообщения</a>
+			</td>
+			<td>
+				<a>Найти партнера</a>
+=======
 				<a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=profile&id=<?= $this->user_id; ?>">Моя анкета</a>
 			</td>
 			<td>
@@ -23,6 +38,7 @@
 			</td>
 			<td>
 				<a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=search‏">Найти партнера</a>
+>>>>>>> 8090a12edbe9a4c06ce870712e066c3846c63bd0
 			</td>
 		</tr>
 	</table>
