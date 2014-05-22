@@ -37,7 +37,7 @@
 		<tbody>
 			<? foreach ($results as $result) { ?>
 				<tr class="search-result-tr">
-					<td><?= $result->name; ?></td>
+					<td><a href="<?= $this->site_url ?>index.php/?component=partner_finder&action=profile&id=<?= $result->user_id; ?>"><?= $result->name; ?></td>
 					<td><?= $result->sex; ?></td>
 					<td><?= $result->birth_date; ?></td>
 					<td><?= $result->dance_type; ?></td>

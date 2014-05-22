@@ -21,6 +21,9 @@ class BulletinBoard extends Components {
 				$this->setBulletin($this->post);
 				$this->redirect($this->post->return_url);
 				break;
+			case 'show':
+				$this->showBulletin($this->get->id);
+				break;				
 			case 'showmylist':
 				$this->showList($this->user_id);
 				break;
@@ -111,6 +114,23 @@ class BulletinBoard extends Components {
 			$breadcrumbs = array_merge($breadcrumbs, ['Мои' => '']);
 		}
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
+	}
+	
+	public function showBulletin($id) {
+		$bulletin = $this->Bulletins->getBulletin($id);
+		
+		// Set View
+		$this->setView('components/bulletin_board/views/bulletin.php', ['bulletin'=>(object)$bulletin]);
+		$this->renderViewContent();
+		$this->content['top'] = $this->View->content;		
+		
+		// Set Bradcrumbs
+		$this->loadHelpers(['Breadcrumbs']);
+		$breadcrumbs = [
+			'Объявления' => $this->site_url . 'index.php/?component=bulletin_board&action=showlist',
+			$bulletin['title'] => ''
+		];
+		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);		
 	}	
 
 	public function setBulletin($bulletin) {
