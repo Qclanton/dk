@@ -5,11 +5,13 @@ class Messages extends Models {
 	const MESSAGE_QUERY_BASE_SUBJECT="
 		m.*,
 		LEFT (m.`text`, 50) AS 'shorttext',
-		u.`name` AS 'author'
+		u.`name` AS 'author',
+		p.`image` AS 'image'
 	";
 	const MESSAGE_QUERY_BASE_OBJECT = "
 		`messages` m JOIN 
-		`users` u ON (u.`id`=m.`author_id`) 
+		`users` u ON (u.`id`=m.`author_id`) JOIN
+		`profiles` p ON (p.`user_id`=m.`author_id`)
 	";
 	
 	public function getMessage($id) {

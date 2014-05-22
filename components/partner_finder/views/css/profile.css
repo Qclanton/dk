@@ -94,7 +94,11 @@
     color: #731630;
     font-size: 13px;
     padding: 10px;
+<<<<<<< HEAD
     width: 190px;
+=======
+    width: 215px;
+>>>>>>> 8090a12edbe9a4c06ce870712e066c3846c63bd0
 	box-shadow:0 4px 3px #CCCCCC;}
 	
 .send-message-button {
@@ -109,6 +113,14 @@
 .send-message-button:hover {
 	box-shadow: 0 4px 3px #CCCCCC;}
 	
+<<<<<<< HEAD
+=======
+.send-message-button a {
+	color:#731630;
+	text-decoration:none;
+	text-align:center;}
+	
+>>>>>>> 8090a12edbe9a4c06ce870712e066c3846c63bd0
 .send-message {
 	color: #731630;
     text-decoration: none;	}

@@ -110,7 +110,7 @@ class PartnerFinder extends Components {
 		$results = $this->Profiles->search($search);
 
 		// Set View
-		$this->setView('components/partner_finder/views/searchresults.php', ['results'=>$results]);
+		$this->setView('components/partner_finder/views/searchresults.php', ['results'=>$results, 'order'=>(object)$search['confines']['order'][0]]);
 		$this->renderViewContent();
 		$this->content['top'] = $this->View->content;
 					

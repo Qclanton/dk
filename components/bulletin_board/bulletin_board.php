@@ -24,6 +24,9 @@ class BulletinBoard extends Components {
 			case 'showmylist':
 				$this->showList($this->user_id);
 				break;
+			case 'showlist':
+				$this->showList();
+				break;
 			case 'upload':
 				$this->uploadImage();
 				$this->redirect($this->post->return_url);
@@ -75,13 +78,29 @@ class BulletinBoard extends Components {
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}
 	
+	public $pagination = [
+		'page' => 1,
+		'rows' => 0,
+		'total_pages' => 1,
+		'rows_per_page' => 2
+	];
+	
 	public function showList($user_id=null) {
 		// Get Bulletins
-		$bulletins = $this->Bulletins->getBulletins($this->user_id);
-		$vars = ['bulletins' => $bulletins];
+		$bulletins = $this->Bulletins->getBulletins($user_id);
+		$pagination = $this->pagination;
+		if ($bulletins) { 
+			$pagination['rows'] = $this->Bulletins->getFoundRows();
+			$pagination['total_pages'] = ceil($pagination['rows'] / $pagination['rows_per_page']);
+		}
+
+		$vars = [
+			'bulletins' => $bulletins,
+			'pagination' => (object)$pagination
+		];
 		
 		// Set View
-		$this->setView('components/bulletin_board/views/mylist.php', $vars);
+		$this->setView('components/bulletin_board/views/list.php', $vars);
 		$this->renderViewContent();
 		$this->content['top'] = $this->View->content;		
 		
