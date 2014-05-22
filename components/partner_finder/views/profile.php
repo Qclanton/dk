@@ -23,7 +23,6 @@
 			</td>
 			<td>
 				<a href="<?= $this->site_url; ?>index.php/?component=partner_finder&action=search‏">Найти партнера</a>
->>>>>>> 8090a12edbe9a4c06ce870712e066c3846c63bd0
 			</td>
 		</tr>
 	</table>
