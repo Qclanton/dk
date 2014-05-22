@@ -8,8 +8,13 @@
 	background-color: #FFFFFF;
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
-    display: inline-table;
+    display: inline-block; 
+	height:200px;
 }
+
+.bulletin-list-title {
+	height:55px;
+	vertical-align:top;}
 	
 .bulletin-list-title a{
 	font-size:16px;
@@ -21,12 +26,13 @@
 	text-decoration:underline; }
 	
 .bulletin-list-img {
-	width:120px;
+
 	text-align:center;
 	}
 
 .bulletin-list-img img {
 	height:120px;
+	max-width:200px;
 }
 
 .bulletin-list-price {
