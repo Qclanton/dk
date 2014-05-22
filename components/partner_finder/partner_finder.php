@@ -83,7 +83,7 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
+			'Поиск партнера' => $this->site_url . 'index.php/?component=partner_finder&action=search',
 			'Моя анкета' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
@@ -100,7 +100,7 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
+			'Поиск партнера' => $this->site_url . 'index.php/?component=partner_finder&action=search',
 			'Анкета ' . $profile['id'] => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
@@ -112,7 +112,7 @@ class PartnerFinder extends Components {
 		// Set View
 		$this->setView('components/partner_finder/views/searchresults.php', ['results'=>$results, 'order'=>(object)$search['confines']['order'][0]]);
 		$this->renderViewContent();
-		$this->content['top'] = $this->View->content;
+		$this->content['left'] = $this->View->content;
 					
 		$this->renderSearchForm($search);
 		$this->content['right'] = $this->View->content;
@@ -120,7 +120,7 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
+			'Поиск партнера' => $this->site_url . 'index.php/?component=partner_finder&action=search',
 			'Результаты поиска' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);

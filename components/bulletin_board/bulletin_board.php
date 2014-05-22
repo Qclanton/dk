@@ -108,7 +108,7 @@ class BulletinBoard extends Components {
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = ['Объявления' => $this->site_url . 'index.php/?component=bulletin_board&action=showlist'];
 		if (!empty($user_id)) {
-			$breadcrumbs[] = ['Мои' => ''];
+			$breadcrumbs = array_merge($breadcrumbs, ['Мои' => '']);
 		}
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}	
