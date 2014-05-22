@@ -90,6 +90,24 @@ class Authorization extends Models {
 		setcookie("token", "", time()-1000000000000);
 	}
 	
+	public function checkUserExistance($login) {
+		$query = "SELECT COUNT(`id`) FROM `users` WHERE `login`=?";
+		$result = $this->Database->getValue($query, [$login]);
+		
+		$existance = (!empty($result) ? 'yes' : 'no');
+
+		return $existance;
+	}
+	
+	public function register($user) {
+		$query = "INSERT IGNORE INTO `users` VALUES(NULL, ?, ?, PASSWORD(?))";
+		$vars = [$user['name'], $user['login'], $user['password']];
+		
+		$result = $this->Database->executeQuery($query, $vars);
+		
+		return $result;
+	}
+	
 	private function getSecret() {
 		return $_SERVER['HTTP_USER_AGENT'] . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . $_SERVER['HTTP_ACCEPT_ENCODING'];
 	}

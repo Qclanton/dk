@@ -72,7 +72,7 @@ class BulletinBoard extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Объявления' => '',
+			'Объявления' => $this->site_url . 'index.php/?component=bulletin_board&action=showlist',
 			(($bulletin_id) ? 'Редактирование: ' . $bulletin['title'] : 'Создание') => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
@@ -106,10 +106,10 @@ class BulletinBoard extends Components {
 		
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
-		$breadcrumbs = [
-			'Объявления' => '',
-			'Мои' => ''
-		];
+		$breadcrumbs = ['Объявления' => $this->site_url . 'index.php/?component=bulletin_board&action=showlist'];
+		if (!empty($user_id)) {
+			$breadcrumbs[] = ['Мои' => ''];
+		}
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}	
 

@@ -83,14 +83,14 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => '',
+			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
 			'Моя анкета' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
 	}
 	
-	private function showProfile($id) {
-		$profile = $this->Profiles->getProfile($id);
+	private function showProfile($user_id) {
+		$profile = $this->Profiles->getProfile(null, $user_id);
 		
 		// Set View
 		$this->setView('components/partner_finder/views/profile.php', ['profile'=>(object)$profile]);
@@ -100,7 +100,7 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => '',
+			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
 			'Анкета ' . $profile['id'] => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);
@@ -120,7 +120,7 @@ class PartnerFinder extends Components {
 		// Set Bradcrumbs
 		$this->loadHelpers(['Breadcrumbs']);
 		$breadcrumbs = [
-			'Поиск партнера' => '',
+			'Поиск партнера' => $this->site_url . 'index.php/component=partner_finder&action=search',
 			'Результаты поиска' => ''
 		];
 		$this->content['breadcrumbs'] = $this->Breadcrumbs->getHtml($breadcrumbs);

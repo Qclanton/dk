@@ -4,18 +4,26 @@ namespace Components;
 class Authorization extends Components {
 	
 	public function prepare() {
-		$this->loadModels(["Authorization"]);
+		$this->loadModels(['Authorization']);
 	}
 	
 	public function load() {
-		$action = (isset($this->get->action) ? $this->get->action : "login");
+		$action = (isset($this->get->action) ? $this->get->action : 'login');
 		
 		switch ($action) { 
-			case "login":
+			case 'login':
 				$this->login();
 				break;				
-			case "logout":
+			case 'logout':
 				$this->logout();
+				break;
+			case 'checkuserexistance':
+				echo $this->Authorization->checkUserExistance($this->get->login);
+				break;
+			case 'register':
+				$this->Authorization->register($this->post->registration);
+				$this->post = (object)$this->post->registration;			
+				$this->login();
 				break;
 		}
 	}
@@ -23,9 +31,9 @@ class Authorization extends Components {
 	private function login() {
 		$redirection_url = (isset($this->post->redirection_url) ? $this->post->redirection_url : $this->site_url);
 		$redirection_url_query = parse_url($redirection_url, PHP_URL_QUERY);
-		$separator = (empty($redirection_url_query) ? "?": "&");
-		$successfull_url = (isset($this->post->successfull_url) ? $this->post->successfull_url : $redirection_url . $separator . "auth=success");
-		$unsuccessfull_url = (isset($this->post->unsuccessfull_url) ? $this->post->unsuccessfull_url : $redirection_url . $separator . "auth=failed");
+		$separator = (empty($redirection_url_query) ? '?': '&');
+		$successfull_url = (isset($this->post->successfull_url) ? $this->post->successfull_url : $redirection_url . $separator . 'auth=success');
+		$unsuccessfull_url = (isset($this->post->unsuccessfull_url) ? $this->post->unsuccessfull_url : $redirection_url . $separator . 'auth=failed');
 		
 		$user_id = $this->authorize($this->post->login, $this->post->password);
 		if ($user_id) {
