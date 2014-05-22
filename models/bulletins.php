@@ -4,11 +4,13 @@ namespace Models;
 class Bulletins extends Models {
 	const BULLETIN_QUERY_BASE_SUBJECT="
 		b.*,
-		bi.`link` as 'default_image'
+		bi.`link` AS 'default_image',
+		u.`name` AS 'name'
 	";
 	const BULLETIN_QUERY_BASE_OBJECT = "
 		`bulletins` b LEFT JOIN
-		`bulletins_images` bi ON (`bi`.bulletin_id=b.`id` AND bi.`default_fl`='YES')
+		`bulletins_images` bi ON (`bi`.bulletin_id=b.`id` AND bi.`default_fl`='YES') JOIN
+		`users` u ON (u.`id`=b.`user_id`)
 	";
 	
 		

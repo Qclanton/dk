@@ -119,6 +119,9 @@ class BulletinBoard extends Components {
 	public function showBulletin($id) {
 		$bulletin = $this->Bulletins->getBulletin($id);
 		
+		// Get attached images
+		$bulletin['images'] = $this->Bulletins->getImages($bulletin_id);
+		
 		// Set View
 		$this->setView('components/bulletin_board/views/bulletin.php', ['bulletin'=>(object)$bulletin]);
 		$this->renderViewContent();
